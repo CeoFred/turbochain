@@ -12,8 +12,8 @@ func TestConnect(t *testing.T) {
 	tra.Connect(trb)
 	trb.Connect(tra)
 
-	assert.Equal(t, tra.peers[trb.addr], trb)
-	assert.Equal(t, trb.peers[tra.addr], tra)
+	assert.Equal(t, tra.peers[trb.Addr()], trb)
+	assert.Equal(t, trb.peers[tra.Addr()], tra)
 
 }
 
@@ -25,9 +25,9 @@ func TestSendMessage(t *testing.T) {
 	trb.Connect(tra)
 
 	msg := []byte("Hello world!")
-	tra.SendMessage(trb.addr, msg)
+	tra.SendMessage(trb.Addr(), msg)
 
 	rpc := <-trb.Consume()
 	assert.Equal(t, rpc.Payload, msg)
-	assert.Equal(t, rpc.From, tra.addr)
+	assert.Equal(t, rpc.From, tra.Addr())
 }
